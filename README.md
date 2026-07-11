@@ -12,23 +12,24 @@
 - AI: Groq (Llama 3.3 70B) via OpenAI-compatible SDK
 
 ## Project Structure
-groweasy
+# GrowEasy Project Structure
+📦 groweasy
 ├── 📂 frontend
 │   ├── 📂 src
 │   │   ├── 📂 app
 │   │   │   ├── favicon.ico
 │   │   │   ├── globals.css
 │   │   │   ├── layout.tsx
-│   │   │   ├── page.tsx
-│   │   │   📂 components
+│   │   │   └── page.tsx
+│   │   ├── 📂 components
 │   │   │   ├── Analytics.tsx
 │   │   │   ├── DataTable.tsx
 │   │   │   ├── FileDropzone.tsx
-│   │   │   ├── StepIndicator.tsx
-│   │   │   📂 lib
-│   │   │   ├── api.ts
-│   │   │   📂 types
-│   │   │   ├──crm.ts
+│   │   │   └── StepIndicator.tsx
+│   │   ├── 📂 lib
+│   │   │   └── api.ts
+│   │   ├── 📂 types
+│   │   │   └── crm.ts
 │   │   ├── ...
 │   ├── .env
 │   ├── .gitignore
@@ -54,6 +55,7 @@ groweasy
 │
 ├── .gitignore
 └── README.md
+
 
 ## Local Setup
 
