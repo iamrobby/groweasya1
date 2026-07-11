@@ -93,37 +93,37 @@ Raw CSV rows are batched (20 rows/batch) and sent to Groq's Llama 3.3 70B model 
 prompt defining the GrowEasy CRM schema, allowed enum values, and field-mapping rules. A
 deterministic validation layer runs after extraction to catch and correct any AI output that
 doesn't strictly follow the rules (invalid dates, hallucinated enums, unsplit multi-value fields).
-# CSV → CRM Import Pipeline
+
 
 ## Workflow Diagram
 
 ```mermaid
 flowchart TD
-    A[Upload CSV] --> B[Client-side parse & preview (PapaParse, no AI)]
-    B --> C[Confirm click]
-    C --> D[POST file to Express backend (Render)]
-    D --> E[Server-side parse & batch rows]
-    E --> F[Send batches to Groq AI (Llama 3.3 70B)]
-    F --> G[AI returns mapped CRM JSON]
-    G --> H[Validator enforces rules (dates, enums, skip logic)]
-    H --> I[Aggregate JSON response]
-    I --> J[Frontend renders results table + analytics dashboard]
+    A["Upload CSV"] --> B["Client-side parse & preview (PapaParse, no AI)"]
+    B --> C["Confirm click"]
+    C --> D["POST file to Express backend (Render)"]
+    D --> E["Server-side parse & batch rows"]
+    E --> F["Send batches to Groq AI (Llama 3.3 70B)"]
+    F --> G["AI returns mapped CRM JSON"]
+    G --> H["Validator enforces rules (dates, enums, skip logic)"]
+    H --> I["Aggregate JSON response"]
+    I --> J["Frontend renders results table + analytics dashboard"]
 ```
 # System Architecture
 
 ```mermaid
-flowchart LR
-    User[User Browser] --> Frontend[Next.js Frontend]
-    Frontend -->|Upload CSV| Backend[Express Backend (Render)]
-    Backend -->|/api/import/preview| Frontend
-    Backend -->|/api/import| GroqAI[Groq AI Extraction Service (Llama 3.3 70B)]
-    GroqAI --> Parser[Parser]
-    GroqAI --> Validator[Validator]
-    Parser --> CRM[CRM JSON Data]
-    Validator --> CRM
-    CRM --> Backend
-    Backend --> Frontend
-    Frontend --> Dashboard[Results Table + Analytics Dashboard]
+flowchart TD
+    A["User Browser"] --> B["Next.js Frontend"]
+    B -- "Upload CSV" --> C["Express Backend (Render)"]
+    C -- "/api/import/preview" --> B
+    C -- "Server-side parse & batch rows" --> D["Parser"]
+    D -- "Parsed batches" --> F
+    C -- "/api/import" --> E["Groq AI (Llama 3.3 70B)"]
+    E -- "Mapped CRM JSON" --> C
+    C -- "Validate rules (dates, enums, skip logic)" --> F["Validator"]
+    F -- "Validated JSON" --> E
+    C -- "Aggregate JSON response" --> B
+    B -- "Render results table + dashboard" --> A
 ```
 # System Architecture (Sequence Diagram)
 
