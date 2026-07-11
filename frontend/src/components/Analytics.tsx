@@ -79,7 +79,8 @@ export default function Analytics({
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
-                label={(entry:{ name: string; value: number }) => `${entry.name}: ${entry.value}`}
+                label={(entry) => `${entry.name ?? ""}: ${entry.value}`}
+
               >
                 {statusData.map((_, i) => (
                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
