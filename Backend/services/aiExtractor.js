@@ -5,7 +5,7 @@ import {
   CRM_FIELDS,
   ALLOWED_CRM_STATUS,
   ALLOWED_DATA_SOURCE,
-} from "../config/crmSchema.js";
+} from "../config/crmschema.js";
 
 dotenv.config();
 

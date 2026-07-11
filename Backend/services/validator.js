@@ -1,4 +1,4 @@
-import { ALLOWED_CRM_STATUS, ALLOWED_DATA_SOURCE } from "../config/crmSchema.js";
+import { ALLOWED_CRM_STATUS, ALLOWED_DATA_SOURCE } from "../config/crmschema.js";
 
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
 const PHONE_REGEX = /\+?\d[\d\s-]{7,14}\d/g;
