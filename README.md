@@ -12,49 +12,45 @@
 - AI: Groq (Llama 3.3 70B) via OpenAI-compatible SDK
 
 ## Project Structure
-# GrowEasy Project Structure
-📦 groweasy
-├── 📂 frontend
-│   ├── 📂 src
-│   │   ├── 📂 app
+
+```
+groweasy/
+├── frontend/
+│   ├── src/
+│   │   ├── app/
 │   │   │   ├── favicon.ico
 │   │   │   ├── globals.css
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
-│   │   ├── 📂 components
+│   │   ├── components/
 │   │   │   ├── Analytics.tsx
 │   │   │   ├── DataTable.tsx
 │   │   │   ├── FileDropzone.tsx
 │   │   │   └── StepIndicator.tsx
-│   │   ├── 📂 lib
+│   │   ├── lib/
 │   │   │   └── api.ts
-│   │   ├── 📂 types
-│   │   │   └── crm.ts
-│   │   ├── ...
-│   ├── .env
-│   ├── .gitignore
-│   ├── AGENTS.md
-│   ├── CLAUDE.md
+│   │   └── types/
+│   │       └── crm.ts
+│   ├── .env.example
 │   ├── package.json
 │   └── next.config.js
 │
-├── 📂 backend
-│   ├── 📂 config
-│   │   └── crmschema.js
-│   ├── 📂 routes
+├── backend/
+│   ├── config/
+│   │   └── crmSchema.js
+│   ├── routes/
 │   │   └── import.js
-│   ├── 📂 services
+│   ├── services/
 │   │   ├── aiExtractor.js
 │   │   ├── csvParser.js
 │   │   └── validator.js
-│   ├── 📂 node_modules
-│   ├── .env
+│   ├── .env.example
 │   ├── package.json
-│   ├── package-lock.json
 │   └── server.js
 │
 ├── .gitignore
 └── README.md
+```
 
 
 ## Local Setup
