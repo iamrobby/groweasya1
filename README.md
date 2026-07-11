@@ -1,9 +1,8 @@
 # GrowEasy AI-Powered CSV Lead Importer
 
 ## Live Links
-- Frontend: https://groweasy-csv-importer.vercel.app
-- Backend API: https://groweasy-backend.onrender.com
-- GitHub: https://github.com/YOUR_USERNAME/groweasy-csv-importer
+- Frontend: https://groweasya1.vercel.app/
+- Backend API: https://groweasya1.onrender.com
 
 > Note: Backend is on Render's free tier — first request after inactivity may take 30-50s to wake up.
 
@@ -13,9 +12,48 @@
 - AI: Groq (Llama 3.3 70B) via OpenAI-compatible SDK
 
 ## Project Structure
-groweasy-csv-importer/
-├── backend/     # Express API — CSV parsing, AI extraction, validation
-└── frontend/    # Next.js app — upload, preview, results, analytics
+groweasy
+├── 📂 frontend
+│   ├── 📂 src
+│   │   ├── 📂 app
+│   │   │   ├── favicon.ico
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   📂 components
+│   │   │   ├── Analytics.tsx
+│   │   │   ├── DataTable.tsx
+│   │   │   ├── FileDropzone.tsx
+│   │   │   ├── StepIndicator.tsx
+│   │   │   📂 lib
+│   │   │   ├── api.ts
+│   │   │   📂 types
+│   │   │   ├──crm.ts
+│   │   ├── ...
+│   ├── .env
+│   ├── .gitignore
+│   ├── AGENTS.md
+│   ├── CLAUDE.md
+│   ├── package.json
+│   └── next.config.js
+│
+├── 📂 backend
+│   ├── 📂 config
+│   │   └── crmschema.js
+│   ├── 📂 routes
+│   │   └── import.js
+│   ├── 📂 services
+│   │   ├── aiExtractor.js
+│   │   ├── csvParser.js
+│   │   └── validator.js
+│   ├── 📂 node_modules
+│   ├── .env
+│   ├── package.json
+│   ├── package-lock.json
+│   └── server.js
+│
+├── .gitignore
+└── README.md
 
 ## Local Setup
 
@@ -55,3 +93,61 @@ Raw CSV rows are batched (20 rows/batch) and sent to Groq's Llama 3.3 70B model 
 prompt defining the GrowEasy CRM schema, allowed enum values, and field-mapping rules. A
 deterministic validation layer runs after extraction to catch and correct any AI output that
 doesn't strictly follow the rules (invalid dates, hallucinated enums, unsplit multi-value fields).
+# CSV → CRM Import Pipeline
+
+## Workflow Diagram
+
+```mermaid
+flowchart TD
+    A[Upload CSV] --> B[Client-side parse & preview (PapaParse, no AI)]
+    B --> C[Confirm click]
+    C --> D[POST file to Express backend (Render)]
+    D --> E[Server-side parse & batch rows]
+    E --> F[Send batches to Groq AI (Llama 3.3 70B)]
+    F --> G[AI returns mapped CRM JSON]
+    G --> H[Validator enforces rules (dates, enums, skip logic)]
+    H --> I[Aggregate JSON response]
+    I --> J[Frontend renders results table + analytics dashboard]
+```
+# System Architecture
+
+```mermaid
+flowchart LR
+    User[User Browser] --> Frontend[Next.js Frontend]
+    Frontend -->|Upload CSV| Backend[Express Backend (Render)]
+    Backend -->|/api/import/preview| Frontend
+    Backend -->|/api/import| GroqAI[Groq AI Extraction Service (Llama 3.3 70B)]
+    GroqAI --> Parser[Parser]
+    GroqAI --> Validator[Validator]
+    Parser --> CRM[CRM JSON Data]
+    Validator --> CRM
+    CRM --> Backend
+    Backend --> Frontend
+    Frontend --> Dashboard[Results Table + Analytics Dashboard]
+```
+# System Architecture (Sequence Diagram)
+
+```mermaid
+sequenceDiagram
+    participant User as User Browser
+    participant Frontend as Next.js Frontend
+    participant Backend as Express Backend (Render)
+    participant Parser as Server-side Parser
+    participant Validator as Validator
+    participant GroqAI as Groq AI (Llama 3.3 70B)
+    participant CRM as CRM JSON
+
+    User->>Frontend: Upload CSV
+    Frontend->>Frontend: Client-side parse & preview (PapaParse)
+    User->>Frontend: Confirm click
+    Frontend->>Backend: POST file
+    Backend->>Parser: Server-side parse & batch rows
+    Parser-->>Backend: Parsed batches
+    Backend->>GroqAI: Send batches
+    GroqAI-->>Backend: Mapped CRM JSON
+    Backend->>Validator: Enforce rules (dates, enums, skip logic)
+    Validator-->>Backend: Validated JSON
+    Backend-->>Frontend: Aggregate JSON response
+    Frontend->>User: Render results table + analytics dashboard
+```
+
